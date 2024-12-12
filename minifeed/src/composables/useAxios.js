@@ -1,12 +1,15 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: import.meta.env.PROD
+    ? "https://minifeed.neps.academy/" // URL da API em produção
+    : "http://localhost:5000", // URL da API em desenvolvimento
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
   },
 });
+
 
 export function useAxios() {
   const request = async (method, url, data = null, config = {}) => {

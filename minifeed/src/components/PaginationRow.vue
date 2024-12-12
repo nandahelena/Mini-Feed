@@ -45,12 +45,12 @@
     font-size: 1.5rem;
     cursor: pointer;
     border-radius: 4px;
-    color: $pagination-item-color;
+    color: red;
   }
 
   .pagination-item-active {
-    background-color: $pagination-item-active-background;
-    color: $pagination-item-active-color;
+    background-color: palevioletred;
+    color: greenyellow;
   }
 </style>
 
