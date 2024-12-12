@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>First Vue App</title>
+    <!-- Import Vue.js -->
+    <script src="https://unpkg.com/vue@3"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <div :style="{ 'font-size': helloFontSize + 'px'}">
+        <hello-component :name="name" @increase-text="increaseFontSize()"/>
+      </div>
+    </div>
+
+    <!-- Vue app -->
+    <script>
+        const { createApp, ref } = Vue
+        const app = createApp({
+          setup(){
+            const name = ref('Fernanda')
+            const helloFontSize = ref(20)
+            const increaseFontSize = () => helloFontSize.value += 1.5
+
+            return { helloFontSize, increaseFontSize, name }
+          }
+        })
+
+        app.component("hello-component", {
+          template: `
+            <p>Hello, {{ name }}!</p>
+            <button @click="increaseText()">Increase!</button>
+          `,
+          props: {
+            name: {
+              type: String,
+              default: 'World'
+            }
+          },
+          setup(props, { emit }) {
+            const increaseText = () => emit('increase-text')
+            return { name: props.name, increaseText };
+          },
+          emits: ['increase-text']
+        });
+
+        
+
+        app.mount("#app")
+    </script>
+  </body>
+</html>

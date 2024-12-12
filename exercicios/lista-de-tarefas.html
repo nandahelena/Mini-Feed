@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V-Model</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <style>
+        .feita{
+            text-decoration: line-through;
+            color: grey;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <!-- Campo de inserção de tarefas -->
+        <input type="text" v-model="novaTarefa">
+        <button @click="adicionarTarefa(novaTarefa)">Adicionar tarefa</button>
+
+        <!-- Lista de todas as tarefas -->
+         <ul>
+            <li v-for="(tarefa, index) in listaTarefas" :key="index" :class="{feita: tarefa.feita}"> 
+                {{tarefa.texto}} 
+                <button @click="marcarFeita(index)"> Marcar como feita </button>
+            </li>
+    
+         </ul>
+
+    </div>
+
+
+    <script>
+        const { createApp, ref, reactive } = Vue
+
+        const app = createApp({
+            setup(){
+                const novaTarefa = ref("")
+                let listaTarefas = reactive([])
+
+                const adicionarTarefa = (tarefa) => {
+                    listaTarefas.push({texto: tarefa, feita: false})
+                }
+                
+                const marcarFeita = (item) => {
+                    listaTarefas[item].feita = true
+                }
+                console.log(listaTarefas)
+                
+                return { novaTarefa, listaTarefas, adicionarTarefa, marcarFeita }
+            }
+
+
+        })
+
+        app.mount('#app')
+
+    </script>
+
+</body>
+</html>

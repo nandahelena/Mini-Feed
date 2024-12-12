@@ -1,0 +1,4 @@
+Crie um componente Vue chamado task-item que receba como props o nome de uma tarefa
+e um booleano indicando se ela está concluída ou não. O componente deve exibir o nome
+da tarefa e um botão “Marcar como Concluída”. Quando clicado, emita um evento para o
+componente pai informando que a tarefa foi concluída. 

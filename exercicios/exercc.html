@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <style>
+        .feita{
+            text-decoration: line-through;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <task-item tarefa-nome="Fazer compras" :tarefa-feita="tarefaFeitas" @concluida="setarFeita()"> </task-item>
+    </div>
+
+    <script>
+        const { createApp, ref, reactive } = Vue
+        const app = createApp({
+            setup(){
+                const tarefaFeitas = ref(false)
+                const setarFeita = () => tarefaFeitas.value = true
+                return { setarFeita, tarefaFeitas }
+            }
+        })
+
+        app.component('task-item', {
+            template: `
+                <p :class="{ 'feita': tarefaFeita }" > {{tarefaNome}} </p>
+                <button @click="marcarConcluida()"> Marcar concluída </button>
+            `,
+            props: {
+                tarefaNome: String,
+                tarefaFeita: {
+                    type: Boolean,
+                    default: false
+                }
+            },
+            setup(props, { emit }){
+                const marcarConcluida = () => emit('concluida')
+                return { marcarConcluida }
+            },
+            emits: ['concluida']
+        })
+
+        app.mount('#app')
+    </script>
+</body>
+</html>
