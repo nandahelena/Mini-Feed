@@ -2,18 +2,18 @@
   <div class="pagination">
     <span
       class="pagination-item"
-      :class="{ 'pagination-item-active': i == modelValue }"
+      :class="{ 'pagination-item-active': i === modelValue }"
       @click="changePage(i)"
       v-for="i in pages"
       :key="`page-${i}`"
-      >{{ i }}</span
     >
+      {{ i }}
+    </span>
   </div>
 </template>
 
-  
-
 <script setup>
+  // Define as props que são passadas para o componente
   defineProps({
     modelValue: {
       type: Number,
@@ -25,13 +25,16 @@
     },
   });
 
+  // Define o emit para atualizar o valor de modelValue
   const emit = defineEmits(["update:modelValue"]);
 
+  // Função para mudar a página ao clicar
   function changePage(page) {
-    emit("update:modelValue", page);
+    if (page !== modelValue) { // Verifica se a página clicada é diferente da atual
+      emit("update:modelValue", page);
+    }
   }
 </script>
-
 
 <style lang="scss" scoped>
   .pagination {
@@ -53,5 +56,6 @@
     color: greenyellow;
   }
 </style>
+
 
 
